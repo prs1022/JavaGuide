@@ -1,4 +1,4 @@
-本文来自[木木匠](https://github.com/kinglaw1204)投稿，[SnailClimb](https://github.com/Snailclimb) 对本文进行了内容和排版进行了修改完善。
+本文来自[木木匠](https://github.com/kinglaw1204)投稿。
 
 <!-- TOC -->
 
@@ -87,7 +87,7 @@ MySQL 没有命中缓存，那么就会进入分析器，分析器主要是用�
 
 ### 2.1 查询语句
 
-说了以上这么多，那么究竟一条 sql 语句是如何执行的呢？其实我们的 sql 可以分为 2 中，一种是查询，一种是更新（增加，更新，删除）。我们先分析下查询语句，语句如下：
+说了以上这么多，那么究竟一条 sql 语句是如何执行的呢？其实我们的 sql 可以分为两种，一种是查询，一种是更新（增加，更新，删除）。我们先分析下查询语句，语句如下：
 
 ```sql
 select * from tb_student  A where A.age='18' and A.name=' 张三 ';
@@ -140,10 +140,10 @@ update tb_student A set A.age='19' where A.name=' 张三 ';
 
 * MySQL 主要分为 Server 曾和引擎层，Server 层主要包括连接器、查询缓存、分析器、优化器、执行器，同时还有一个日志模块（binlog），这个日志模块所有执行引擎都可以共用,redolog 只有 InnoDB 有。
 * 引擎层是插件式的，目前主要包括，MyISAM,InnoDB,Memory 等。
-* SQL 等执行过程分为两类，一类对于查询等过程如下：权限校验---》查询缓存---》分析器---》优化器---》权限校验---》执行器---》引擎
-* 对于更新等语句执行流程如下：分析器----》权限校验----》执行器---》引擎---redo log prepare---》binlog---》redo log commit
+* 查询语句的执行流程如下：权限校验（如果命中缓存）---》查询缓存---》分析器---》优化器---》权限校验---》执行器---》引擎
+* 更新语句执行流程如下：分析器----》权限校验----》执行器---》引擎---redo log(prepare 状态---》binlog---》redo log(commit状态)
 
 ## 四 参考
 
-* 《一起构建 MySQL 知识网络》
+* 《MySQL 实战45讲》
 * MySQL 5.6参考手册:<https://dev.MySQL.com/doc/refman/5.6/en/>
